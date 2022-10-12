@@ -1,0 +1,157 @@
+$orangeredColor: orangered;
+
+@mixin flex-style-row($gap) {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: $gap;
+}
+
+@mixin flex-style-column($gap) {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
+  gap: $gap;
+}
+
+header {
+  background-color: var(--dark-blue);
+  color: var(--color-white);
+  width: 100%;
+
+  .header {
+    @include flex-style-row(0);
+    margin: 0 auto;
+    max-width: 1000px;
+    position: relative;
+    .logo {
+      h2 {
+        font-weight: 700;
+        span {
+          color: $orangeredColor;
+        }
+      }
+    }
+  }
+}
+.logo-mobile {
+  display: none;
+}
+
+.menu-icon {
+  display: none;
+  cursor: pointer;
+}
+
+nav {
+  @include flex-style-row(1rem);
+  width: 75%;
+  ul {
+    @include flex-style-row(1rem);
+
+    li {
+      a {
+        color: #fff;
+        &:hover {
+          color: $orangeredColor;
+        }
+      }
+    }
+  }
+}
+.header-right {
+  @include flex-style-row(1rem);
+  a {
+    &:hover {
+      color: $orangeredColor;
+    }
+  }
+}
+
+.cart a {
+  cursor: pointer;
+  @include flex-style-row(0);
+  font-size: 1.3rem;
+  position: relative;
+  &:hover {
+    color: $orangeredColor;
+  }
+  p {
+    position: absolute;
+    top: -1.5rem;
+    right: -1rem;
+    font-weight: 700;
+  }
+}
+@media screen and (max-width: 800px) {
+  .cart a {
+    display: inline;
+    margin: 0 0 0 1rem;
+  }
+  .logo-mobile {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .menu-icon {
+    @include flex-style-row(1rem);
+    cursor: pointer;
+  }
+  .header-right {
+    flex-direction: column;
+    padding: 0;
+    align-items: flex-start;
+    a {
+      border-bottom: 1px solid #333;
+      width: 100%;
+      padding: 0 0 1rem 0.8rem;
+    }
+  }
+  nav {
+    position: absolute;
+    display: block;
+    width: 50% !important;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background-color: var(--dark-blue);
+    transform: translateX(-200%);
+    transition: all 1s;
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    li {
+      padding: 5px 0;
+      border-bottom: 1px solid #333;
+      a {
+        display: block;
+        padding: 0 0 0.5rem 0.8rem;
+        cursor: pointer;
+      }
+    }
+  }
+  .nav-wrapper {
+    position: absolute;
+    display: block;
+    width: 100vw !important;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: all 0.3s;
+    z-index: -1;
+  }
+
+  .show-nav {
+    transform: translateX(0);
+  }
+  .hide-nav {
+    transform: translateX(-200%);
+  }
+}
