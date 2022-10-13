@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 import styles from './Header.module.scss';
 import { Link, NavLink } from 'react-router-dom';
-import { FaShoppingCart, FaTimes } from 'react-icons/fa';
+import { FaShoppingCart, FaTimes, FaRegUserCircle } from 'react-icons/fa';
 import { BiMenuAltRight } from 'react-icons/bi';
 import { auth } from '@/firebase/credentials';
-import { signOut } from 'firebase/auth';
+import { signOut, onAuthStateChanged } from 'firebase/auth';
 import { toast } from 'react-toastify';
 
 const logo = (
@@ -26,9 +26,10 @@ const cart = (
   </span>
 );
 
-const activeLink = ({ isActive }) => (isActive ? `active` : '');
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [user, setUser] = useState(null);
+
   const handleToggleMenu = () => setMenuOpen(!menuOpen);
   const handleHideMenu = () => setMenuOpen(false);
   const handleSignOut = async () => {
@@ -39,6 +40,10 @@ const Header = () => {
       toast.error(error.message);
     }
   };
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (response) => setUser(response));
+  }, []);
 
   return (
     <header>
@@ -57,6 +62,12 @@ const Header = () => {
             <li className={`${styles['logo-mobile']}`}>
               {logo} <FaTimes size={22} color="#fff" onClick={handleHideMenu} />
             </li>
+            {user && (
+              <Fragment>
+                {user.displayName}{' '}
+                <FaRegUserCircle className="--mr1" size={30} />
+              </Fragment>
+            )}
             <li>
               <NavLink end="true" to="/" activeclassname="active">
                 Home
