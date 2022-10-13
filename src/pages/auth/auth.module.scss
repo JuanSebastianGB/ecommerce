@@ -1,0 +1,33 @@
+.auth {
+  display: flex;
+  min-height: 80vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.form {
+  padding: 2rem;
+  h2 {
+    color: var(--color-orange);
+    text-align: center;
+    font-size: 2rem;
+  }
+  a {
+    color: var(--color-dark);
+  }
+  .register {
+    p {
+      font-size: 1.3rem;
+      display: inline-block;
+    }
+    a {
+      font-weight: 700;
+    }
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .img {
+    display: none;
+  }
+}

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styles from './Header.module.scss';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { FaShoppingCart, FaTimes } from 'react-icons/fa';
 import { BiMenuAltRight } from 'react-icons/bi';
 
@@ -23,6 +23,7 @@ const cart = (
   </span>
 );
 
+const activeLink = ({ isActive }) => (isActive ? `active` : '');
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const handleToggleMenu = () => setMenuOpen(!menuOpen);
@@ -46,16 +47,26 @@ const Header = () => {
               {logo} <FaTimes size={22} color="#fff" onClick={handleHideMenu} />
             </li>
             <li>
-              <Link to="/">Home</Link>
+              <NavLink end="true" to="/" activeclassname="active">
+                Home
+              </NavLink>
             </li>
             <li>
-              <Link to="/contact">Contact us</Link>
+              <NavLink end="true" to="/contact" activeclassname="active">
+                Contact us
+              </NavLink>
             </li>
           </ul>
           <div className={styles['header-right']} onClick={handleHideMenu}>
-            <Link to="/login">Login</Link>
-            <Link to="/register">Register</Link>
-            <Link to="/orders">My orders</Link>
+            <NavLink end="true" to="/login" activeclassname="active">
+              Login
+            </NavLink>
+            <NavLink end="true" to="/register" activeclassname="active">
+              Register
+            </NavLink>
+            <NavLink end="true" to="/orders" activeclassname="active">
+              My orders
+            </NavLink>
           </div>
           {cart}
         </nav>
