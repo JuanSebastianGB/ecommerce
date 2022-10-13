@@ -1,23 +1,10 @@
 import React from 'react';
 import styles from './auth.module.scss';
 import loginImage from '@/assets/login.png';
-import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { FaGoogle } from 'react-icons/fa';
 import { Card } from '@/components';
-
-const InputStyled = styled.input`
-  padding: 1rem;
-  display: block;
-  margin-bottom: 1rem;
-  border-radius: 5px;
-  border: thin solid black;
-  width: 100%;
-  outline: none;
-  &::placeholder {
-    color: gray;
-  }
-`;
+import { InputStyled } from './InputStyles';
 
 const Login = () => {
   return (
