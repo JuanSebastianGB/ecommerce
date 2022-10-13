@@ -6,6 +6,8 @@ import { BiMenuAltRight } from 'react-icons/bi';
 import { auth } from '@/firebase/credentials';
 import { signOut, onAuthStateChanged } from 'firebase/auth';
 import { toast } from 'react-toastify';
+import { useDispatch, useSelector } from 'react-redux';
+import { makeUserActive, resetAuth } from '@/redux/states/authSlice';
 
 const logo = (
   <div className={styles.logo}>
@@ -26,15 +28,22 @@ const cart = (
   </span>
 );
 
+const createUserName = (email) => {
+  const userName = email.split('@', 1)[0];
+  return `${userName.charAt(0).toUpperCase()}${userName.slice(1)}`;
+};
+
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [user, setUser] = useState(null);
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth);
 
   const handleToggleMenu = () => setMenuOpen(!menuOpen);
   const handleHideMenu = () => setMenuOpen(false);
   const handleSignOut = async () => {
     try {
       await signOut(auth);
+      dispatch(resetAuth(''));
       toast.success('logout successfully');
     } catch (error) {
       toast.error(error.message);
@@ -42,7 +51,12 @@ const Header = () => {
   };
 
   useEffect(() => {
-    onAuthStateChanged(auth, (response) => setUser(response));
+    onAuthStateChanged(auth, (response) => {
+      if (!response) return;
+      let { email, uid, displayName: userName } = response;
+      userName = userName ? userName : createUserName(email);
+      dispatch(makeUserActive({ email, uid, userName }));
+    });
   }, []);
 
   return (
@@ -62,9 +76,9 @@ const Header = () => {
             <li className={`${styles['logo-mobile']}`}>
               {logo} <FaTimes size={22} color="#fff" onClick={handleHideMenu} />
             </li>
-            {user && (
+            {user.isLoggedIn && (
               <Fragment>
-                {user.displayName}{' '}
+                {user.userName}
                 <FaRegUserCircle className="--mr1" size={30} />
               </Fragment>
             )}
