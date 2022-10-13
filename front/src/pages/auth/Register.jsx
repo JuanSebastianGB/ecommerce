@@ -5,8 +5,7 @@ import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { Card, Loader } from '@/components';
 import { InputStyled } from './InputStyles';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import app, { auth } from '@/firebase/credentials';
@@ -40,7 +39,9 @@ const Register = () => {
       const { user } = userCredentials;
       setLoading(false);
       toast.success('User Registered successfully...');
-      navigate('/login');
+      setTimeout(() => {
+        navigate('/login');
+      }, 2000);
     } catch (error) {
       toast.error(`something went wrong ${error}`);
       setLoading(false);
@@ -49,7 +50,6 @@ const Register = () => {
 
   return (
     <Fragment>
-      <ToastContainer />
       {loading && <Loader />}
       <section className={`${styles.auth} container`}>
         <Card>

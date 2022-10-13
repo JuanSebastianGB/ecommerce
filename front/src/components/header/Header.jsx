@@ -3,6 +3,9 @@ import styles from './Header.module.scss';
 import { Link, NavLink } from 'react-router-dom';
 import { FaShoppingCart, FaTimes } from 'react-icons/fa';
 import { BiMenuAltRight } from 'react-icons/bi';
+import { auth } from '@/firebase/credentials';
+import { signOut } from 'firebase/auth';
+import { toast } from 'react-toastify';
 
 const logo = (
   <div className={styles.logo}>
@@ -28,6 +31,14 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const handleToggleMenu = () => setMenuOpen(!menuOpen);
   const handleHideMenu = () => setMenuOpen(false);
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      toast.success('logout successfully');
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
   return (
     <header>
@@ -66,6 +77,9 @@ const Header = () => {
             </NavLink>
             <NavLink end="true" to="/orders" activeclassname="active">
               My orders
+            </NavLink>
+            <NavLink end="true" to="/" onClick={handleSignOut}>
+              Sign Out
             </NavLink>
           </div>
           {cart}

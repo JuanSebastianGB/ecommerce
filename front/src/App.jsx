@@ -2,10 +2,13 @@ import { Fragment } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Header, Footer } from '@/components';
 import { Contact, Login, Home, Register, Reset } from '@/pages';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
     <Fragment>
+      <ToastContainer />
       <BrowserRouter>
         <Header />
         <Routes>
