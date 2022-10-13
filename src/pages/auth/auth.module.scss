@@ -36,6 +36,11 @@
   a {
     color: var(--color-dark);
   }
+  .links {
+    display: flex;
+    justify-content: space-between;
+  }
+
   .register {
     p {
       font-size: 1.3rem;

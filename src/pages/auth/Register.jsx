@@ -3,7 +3,6 @@ import styles from './auth.module.scss';
 import registerImage from '@/assets/register.png';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { FaGoogle } from 'react-icons/fa';
 import { Card } from '@/components';
 import { InputStyled } from './InputStyles';
 
