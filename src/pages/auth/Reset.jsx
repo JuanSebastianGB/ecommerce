@@ -10,7 +10,7 @@ const Reset = () => {
     <section className={`${styles.auth} container`}>
       <Card>
         <div className={styles.form}>
-          <h2>Register</h2>
+          <h2>Reset Password</h2>
           <form action="">
             <InputStyled type="email" placeholder="Email" />
             <button className="--btn --btn-primary --btn-block">
