@@ -2,11 +2,14 @@ import { useState, Fragment } from 'react';
 import styles from './auth.module.scss';
 import registerImage from '@/assets/register.png';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Card, Loader } from '@/components';
 import { InputStyled } from './InputStyles';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import app, { auth } from '@/firebase/credentials';
 
 const initialFormData = {
   email: '',
@@ -16,17 +19,31 @@ const initialFormData = {
 const Register = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  const handleRegisterUser = (e) => {
+
+  const handleRegisterUser = async (e) => {
     e.preventDefault();
     e.stopPropagation();
     const { email, password, confirmPassword } = formData;
-    if (password !== confirmPassword) toast.error('Password do not match');
-    else {
-      toast.success('Great');
-      setLoading(true);
+    if (password !== confirmPassword)
+      return toast.error('Password do not match');
+    setLoading(true);
+    try {
+      const userCredentials = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const { user } = userCredentials;
+      setLoading(false);
+      toast.success('User Registered successfully...');
+      navigate('/login');
+    } catch (error) {
+      toast.error(`something went wrong ${error}`);
+      setLoading(false);
     }
   };
 
@@ -42,7 +59,8 @@ const Register = () => {
               <InputStyled
                 type="email"
                 placeholder="Email"
-                name="email"j
+                name="email"
+                j
                 required
                 value={formData.email}
                 onChange={handleChange}
