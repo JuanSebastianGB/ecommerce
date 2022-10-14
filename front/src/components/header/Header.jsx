@@ -8,6 +8,16 @@ import { signOut, onAuthStateChanged } from 'firebase/auth';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { makeUserActive, resetAuth } from '@/redux/states/authSlice';
+import { ShowOnLogin, ShowOnLogout } from '@/components';
+import styled from 'styled-components';
+
+const StyledUserNav = styled.a`
+  color: orange;
+  font-size: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 const logo = (
   <div className={styles.logo}>
@@ -57,7 +67,7 @@ const Header = () => {
       userName = userName ? userName : createUserName(email);
       dispatch(makeUserActive({ email, uid, userName }));
     });
-  }, []);
+  }, [dispatch]);
 
   return (
     <header>
@@ -76,36 +86,44 @@ const Header = () => {
             <li className={`${styles['logo-mobile']}`}>
               {logo} <FaTimes size={22} color="#fff" onClick={handleHideMenu} />
             </li>
-            {user.isLoggedIn && (
-              <Fragment>
-                {user.userName}
-                <FaRegUserCircle className="--mr1" size={30} />
-              </Fragment>
-            )}
+
             <li>
-              <NavLink end="true" to="/" activeclassname="active">
-                Home
-              </NavLink>
+              <ShowOnLogin>
+                <NavLink end="true" to="/" activeclassname="active">
+                  Home
+                </NavLink>
+              </ShowOnLogin>
             </li>
             <li>
-              <NavLink end="true" to="/contact" activeclassname="active">
-                Contact us
-              </NavLink>
+              <ShowOnLogin>
+                <NavLink end="true" to="/contact" activeclassname="active">
+                  Contact us
+                </NavLink>
+              </ShowOnLogin>
             </li>
           </ul>
           <div className={styles['header-right']} onClick={handleHideMenu}>
-            <NavLink end="true" to="/login" activeclassname="active">
-              Login
-            </NavLink>
-            <NavLink end="true" to="/register" activeclassname="active">
-              Register
-            </NavLink>
-            <NavLink end="true" to="/orders" activeclassname="active">
-              My orders
-            </NavLink>
-            <NavLink end="true" to="/" onClick={handleSignOut}>
-              Sign Out
-            </NavLink>
+            <ShowOnLogout>
+              <NavLink end="true" to="/login" activeclassname="active">
+                Login
+              </NavLink>
+            </ShowOnLogout>
+            <ShowOnLogin>
+              <StyledUserNav href="#home">
+                Hi, {user.userName}
+                <FaRegUserCircle size={20} />
+              </StyledUserNav>
+            </ShowOnLogin>
+            <ShowOnLogin>
+              <NavLink end="true" to="/orders" activeclassname="active">
+                My orders
+              </NavLink>
+            </ShowOnLogin>
+            <ShowOnLogin>
+              <NavLink end="true" to="/" onClick={handleSignOut}>
+                Sign Out
+              </NavLink>
+            </ShowOnLogin>
           </div>
           {cart}
         </nav>
