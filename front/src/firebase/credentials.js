@@ -7,14 +7,22 @@ import { getStorage } from 'firebase/storage';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
+const {
+  VITE_API_KEY,
+  VITE_AUTH_DOMAIN,
+  VITE_PROJECT_ID,
+  VITE_STORAGE_BUCKET,
+  VITE_MESSAGING_SENDER_ID,
+  VITE_ID,
+} = import.meta.env;
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: 'AIzaSyCR6ckhBGQZNMeWIrj-xyH5k7Nc7Uea6KM',
-  authDomain: 'backend-ecommerce-3624f.firebaseapp.com',
-  projectId: 'backend-ecommerce-3624f',
-  storageBucket: 'backend-ecommerce-3624f.appspot.com',
-  messagingSenderId: '722009843266',
-  appId: '1:722009843266:web:d77d1d791648d52c59afdb',
+  apiKey: VITE_API_KEY,
+  authDomain: VITE_AUTH_DOMAIN,
+  projectId: VITE_PROJECT_ID,
+  storageBucket: VITE_STORAGE_BUCKET,
+  messagingSenderId: VITE_MESSAGING_SENDER_ID,
+  appId: VITE_ID,
 };
 
 // Initialize Firebase
