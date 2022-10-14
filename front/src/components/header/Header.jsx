@@ -1,6 +1,6 @@
 import { useState, useEffect, Fragment } from 'react';
 import styles from './Header.module.scss';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { FaShoppingCart, FaTimes, FaRegUserCircle } from 'react-icons/fa';
 import { BiMenuAltRight } from 'react-icons/bi';
 import { auth } from '@/firebase/credentials';
@@ -47,6 +47,7 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth);
+  const navigate = useNavigate();
 
   const handleToggleMenu = () => setMenuOpen(!menuOpen);
   const handleHideMenu = () => setMenuOpen(false);
@@ -62,7 +63,7 @@ const Header = () => {
 
   useEffect(() => {
     onAuthStateChanged(auth, (response) => {
-      if (!response) return;
+      if (!response) navigate('/login');
       let { email, uid, displayName: userName } = response;
       userName = userName ? userName : createUserName(email);
       dispatch(makeUserActive({ email, uid, userName }));

@@ -12,7 +12,7 @@ const Slider = () => {
   const showPrevSlide = () =>
     setCurrentSlide(currentSlide === 0 ? lengthData - 1 : currentSlide - 1);
   return (
-    <div>
+    <div className="slider">
       <AiOutlineArrowLeft className="arrow prev" onClick={showPrevSlide} />
       <AiOutlineArrowRight className="arrow next" onClick={showNextSlide} />
       {sliderData.map(({ desc, heading, image }, index) => (
@@ -22,7 +22,7 @@ const Slider = () => {
         >
           {index === currentSlide && (
             <Fragment>
-              <img width="300" src={image} alt="image" />
+              <img src={image} alt="image" />
               <div className="content">
                 <h2>{heading}</h2>
                 <p>{desc}</p>
